@@ -22,7 +22,7 @@ $wa->useScript('bootstrap.dropdown');
 <div class="mod-login dropdown">
     <button class="btn dropdown-toggle" type="button" id="logoutDropdown-<?php echo $module->id; ?>" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="icon-user icon-fw" aria-hidden="true"></span> 
-        <?php echo Text::_('MOD_LOGIN_PROFILE'); ?>
+        <?php echo (!$params->get('name', 0)) ? htmlspecialchars($user->name, ENT_COMPAT, 'UTF-8') : htmlspecialchars($user->username, ENT_COMPAT, 'UTF-8'); ?>
     </button>
     
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="logoutDropdown-<?php echo $module->id; ?>">
