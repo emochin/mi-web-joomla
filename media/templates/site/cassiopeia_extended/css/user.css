@@ -246,20 +246,29 @@
   flex-direction: row !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 1rem 5% !important; /* Space from edges */
-  flex-wrap: wrap;
+  padding: 1.5rem 5% !important; /* Space from edges */
+  flex-wrap: nowrap !important; /* Force single line */
 }
 
 /* Ensure Logo and Nav don't stack by default */
 .container-header > .grid-child {
-  flex: 0 0 auto;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .container-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
   height: auto;
+  flex-grow: 1 !important; /* Push to the right */
+}
+
+/* Hide mobile toggle if it appears on desktop */
+.container-nav .container-header .navbar-toggler {
+    display: none !important;
 }
 
 .container-nav .mod-menu,
