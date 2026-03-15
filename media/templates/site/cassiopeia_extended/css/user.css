@@ -238,13 +238,28 @@
 }
 
 /* ========================================================================
-   Top Horizontal Menu Styling
+   Header and Top Horizontal Menu Styling (Side by Side)
    ======================================================================== */
+
+.container-header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1rem 5% !important; /* Space from edges */
+  flex-wrap: wrap;
+}
+
+/* Ensure Logo and Nav don't stack by default */
+.container-header > .grid-child {
+  flex: 0 0 auto;
+}
+
 .container-nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 100%;
+  height: auto;
 }
 
 .container-nav .mod-menu,
