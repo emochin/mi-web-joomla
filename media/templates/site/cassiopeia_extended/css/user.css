@@ -238,69 +238,64 @@
 }
 
 /* ========================================================================
-   Header and Top Horizontal Menu Styling (Side by Side)
+   Header and Desktop Navigation (Responsive, Scalable)
    ======================================================================== */
 
-.container-header {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 1.5rem 5% !important; /* Space from edges */
-  flex-wrap: nowrap !important; /* Force single line */
-}
-
-/* Ensure Logo and Nav don't stack by default */
-.container-header > .grid-child {
-  flex: 0 0 auto !important;
-  width: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.container-nav {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  height: auto;
-  flex-grow: 1 !important; /* Push to the right */
-}
-
-/* Hide mobile toggle if it appears on desktop */
-.container-nav .container-header .navbar-toggler {
-    display: none !important;
-}
-
-.container-nav .mod-menu,
-.container-nav .metismenu {
-  display: flex !important;
+.site.wrapper-fluid .container-header,
+.site.wrapper-static .container-header {
+  display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 5%;
+  flex-wrap: wrap; /* Allow wrapping on very small screens */
+  gap: 1rem;
+}
+
+/* Ensure Logo and Nav layout gracefully */
+.site .container-header > .grid-child {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.site .container-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1; /* Push to the right */
+}
+
+/* Horizontal Menu Configuration (Desktop Focus) */
+.site .container-nav .mod-menu,
+.site .container-nav .metismenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.container-nav .metismenu.mod-menu {
-    flex-direction: row;
-}
-
-.container-nav .mod-menu > li,
-.container-nav .metismenu > li {
+.site .container-nav .mod-menu > li,
+.site .container-nav .metismenu > li {
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
 }
 
-.container-nav .mod-menu a,
-.container-nav .metismenu a {
+/* Modern Link Styling */
+.site .container-nav .mod-menu a,
+.site .container-nav .metismenu a {
   font-family: var(--pb-font-sans);
   font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   padding: 0.5rem 0;
   transition: all 0.2s ease;
@@ -308,17 +303,37 @@
   border-bottom: 2px solid transparent;
 }
 
-.container-nav .mod-menu a:hover,
-.container-nav .metismenu a:hover,
-.container-nav .mod-menu a[aria-current="page"],
-.container-nav .metismenu a[aria-current="page"] {
-  color: #ffffff !important;
+.site .container-nav .mod-menu a:hover,
+.site .container-nav .metismenu a:hover,
+.site .container-nav .mod-menu a[aria-current="page"],
+.site .container-nav .metismenu a[aria-current="page"],
+.site .container-nav .mod-menu li.active > a,
+.site .container-nav .metismenu li.active > a {
+  color: #ffffff;
   border-bottom-color: #ffffff;
 }
 
-/* Override Cassiopeia mobile menu toggler on desktop */
-@media (min-width: 992px) {
-  .container-nav .navbar-toggler {
-    display: none !important;
+/* 
+ * Mobile Responsiveness 
+ * On very small screens, let the menu drop below the logo cleanly
+ * rather than forcing a strict squeeze that breaks the layout.
+ */
+@media (max-width: 768px) {
+  .site .container-header {
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+  
+  .site .container-nav {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .site .container-nav .mod-menu,
+  .site .container-nav .metismenu {
+    gap: 1rem;
+    justify-content: center;
   }
 }
