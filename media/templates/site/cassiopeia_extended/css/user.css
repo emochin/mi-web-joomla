@@ -218,3 +218,20 @@
     --pb-border-color: #27272a;
   }
 }
+/* Override Logo text using CSS */
+.brand-logo img {
+    display: none !important;
+}
+.brand-logo::after {
+    content: "emiliomoreno.com";
+    font-family: var(--pb-font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+    color: var(--pb-text-color, #111);
+}
+@media (prefers-color-scheme: dark) {
+    .brand-logo::after {
+        color: #fff;
+    }
+}
