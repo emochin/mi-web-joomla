@@ -5,244 +5,182 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Cassiopeia Global Typography Overrides */
+  /* ========================================================================
+     Cassiopeia Global CSS Variable Overrides (Killing Defaults)
+     ======================================================================== */
+  
+  /* Typography */
   --cassiopeia-font-family-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --cassiopeia-font-family-headings: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --cassiopeia-font-weight-normal: 400;
   --cassiopeia-font-weight-headings: 800;
 
-  /* Custom Private Blog Variables */
-  --pb-bg-color: #ffffff;
-  --pb-text-color: #111111;
+  /* Global Colors & Backgrounds */
+  --cassiopeia-color-primary: #000000;
+  --cassiopeia-color-hover: #3f3f46;
+  --cassiopeia-color-link: #000000;
+  --body-bg: #ffffff;
+  --body-color: #111111;
+  
+  /* Headers & Footers */
+  --headerbg: #ffffff;
+  --headercolor: #111111;
+  --footerbg: #000000;
+  --footercolor: #ffffff;
+
+  /* Links */
+  --link-color: #111111;
+  --link-hover-color: #71717A;
+
+  /* Buttons */
+  --btnbg: #000000;
+  --btnbgh: #333333;
+  --btncolor: #ffffff;
+  --btncolorh: #ffffff;
+
+  /* Form & Border specifics */
+  --template-bg-light: #fafafa;
+  --template-text-dark: #111111;
+  --cassiopeia-border-color: #e4e4e7;
+
+  /* Custom Private Blog Variables (Legacy mapping) */
+  --pb-bg-color: var(--body-bg);
+  --pb-text-color: var(--body-color);
   --pb-text-light: #71717A;
-  --pb-accent-color: #000000;
-  --pb-border-color: #E4E4E7;
-  --pb-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --pb-accent-color: var(--cassiopeia-color-primary);
+  --pb-border-color: var(--cassiopeia-border-color);
+  --pb-font-sans: var(--cassiopeia-font-family-body);
   --pb-font-serif: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", serif;
 }
 
-/* Force Cassiopeia Container to break out if possible */
+/* ========================================================================
+   Dark Mode Engine (Complete Cassiopeia Inversion)
+   ======================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Global Colors & Backgrounds */
+    --cassiopeia-color-primary: #ffffff;
+    --cassiopeia-color-hover: #d4d4d8;
+    --cassiopeia-color-link: #ffffff;
+    --body-bg: #09090b;
+    --body-color: #fafafa;
+    
+    /* Headers & Footers */
+    --headerbg: #09090b;
+    --headercolor: #fafafa;
+    --footerbg: #000000;
+    --footercolor: #a1a1aa;
+
+    /* Links */
+    --link-color: #fafafa;
+    --link-hover-color: #a1a1aa;
+
+    /* Buttons */
+    --btnbg: #ffffff;
+    --btnbgh: #e4e4e7;
+    --btncolor: #000000;
+    --btncolorh: #000000;
+
+    /* Form & Border specifics */
+    --template-bg-light: #18181b;
+    --template-text-dark: #fafafa;
+    --cassiopeia-border-color: #27272a;
+    
+    /* Blog Mapping */
+    --pb-text-light: #a1a1aa;
+  }
+}
+
+/* ========================================================================
+   Global UI Component Resculpting (Buttons, Inputs, etc)
+   ======================================================================== */
+
+.site .btn-primary, 
+.site .btn-secondary, 
+.site .btn-succes,
+.site .btn-info,
+.site .button {
+  background-color: var(--btnbg) !important;
+  color: var(--btncolor) !important;
+  border: 1px solid var(--btnbg) !important;
+  border-radius: 6px;
+  font-family: var(--cassiopeia-font-family-body);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  box-shadow: none !important;
+}
+
+.site .btn-primary:hover, 
+.site .btn-secondary:hover, 
+.site .btn-succes:hover,
+.site .btn-info:hover,
+.site .button:hover {
+  background-color: var(--btnbgh) !important;
+  border-color: var(--btnbgh) !important;
+  color: var(--btncolorh) !important;
+  transform: translateY(-1px);
+}
+
+.site select, 
+.site input[type="text"], 
+.site input[type="password"], 
+.site input[type="email"], 
+.site textarea,
+.site .form-control {
+  background-color: var(--body-bg);
+  border: 1px solid var(--cassiopeia-border-color);
+  color: var(--body-color);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-family: var(--cassiopeia-font-family-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site select:focus, 
+.site input:focus, 
+.site textarea:focus,
+.site .form-control:focus {
+  border-color: var(--cassiopeia-color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(130, 130, 130, 0.2) !important;
+  outline: none;
+}
+
+.site a {
+    color: var(--link-color);
+    text-decoration-color: rgba(130, 130, 130, 0.3);
+    text-underline-offset: 4px;
+    transition: all 0.2s ease;
+}
+
+.site a:hover {
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
+}
+
+/* ========================================================================
+   Logo Settings & Layout Container Safeties
+   ======================================================================== */
+
 .container-component {
   max-width: 100% !important;
   padding: 0 !important;
 }
 
-.pb-canvas {
-  background-color: var(--pb-bg-color);
-  color: var(--pb-text-color);
-  font-family: var(--pb-font-sans);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  padding: 4rem 1.5rem;
-}
-
-.pb-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Typography Base */
-.pb-canvas h1,
-.pb-canvas h2,
-.pb-canvas h3,
-.pb-canvas h4 {
-  font-family: var(--pb-font-sans);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--pb-text-color);
-  margin: 0;
-}
-
-.pb-canvas a {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.2s ease;
-}
-
-.pb-canvas a:hover {
-  opacity: 0.7;
-}
-
-/* Site Header */
-.pb-site-header {
-  margin-bottom: 5rem;
-  border-bottom: 2px solid var(--pb-text-color);
-  padding-bottom: 2rem;
-}
-
-.pb-main-title {
-  font-size: clamp(3rem, 8vw, 6rem);
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.pb-main-desc {
-  font-family: var(--pb-font-serif);
-  font-size: 1.5rem;
-  color: var(--pb-text-light);
-  margin-top: 1.5rem;
-  max-width: 600px;
-  line-height: 1.4;
-}
-
-/* Metadata (Date, Reading Time) */
-.pb-meta-minimal {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--pb-text-light);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pb-meta-dot {
-  color: var(--pb-border-color);
-}
-
-/* Hero Section */
-.pb-hero-section {
-  margin-bottom: 6rem;
-}
-
-.pb-hero-article {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-@media (min-width: 900px) {
-  .pb-hero-article {
-    grid-template-columns: 1.2fr 1fr;
-  }
-}
-
-.pb-hero-image-wrapper {
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  background: var(--pb-border-color);
-}
-
-.pb-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.pb-hero-image-wrapper:hover .pb-hero-img {
-  transform: scale(1.03);
-}
-
-.pb-hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-}
-
-.pb-hero-excerpt {
-  font-family: var(--pb-font-serif);
-  font-size: 1.25rem;
-  line-height: 1.6;
-  color: var(--pb-text-light);
-  margin-bottom: 2.5rem;
-}
-
-.pb-read-link {
-  display: inline-flex;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--pb-text-color);
-  padding-bottom: 0.25rem;
-  text-transform: uppercase;
-}
-
-.pb-read-link:hover {
-  opacity: 1;
-  color: var(--pb-text-light);
-  border-color: var(--pb-text-light);
-}
-
-/* Grid Section */
-.pb-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  column-gap: 3rem;
-  row-gap: 5rem;
-}
-
-.pb-grid-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.pb-grid-image-wrapper {
-  aspect-ratio: 3/2;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  background: var(--pb-border-color);
-}
-
-.pb-grid-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.pb-grid-image-wrapper:hover .pb-grid-img {
-  transform: scale(1.03);
-}
-
-.pb-grid-title {
-  font-size: 1.75rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.pb-grid-excerpt {
-  font-family: var(--pb-font-serif);
-  font-size: 1.125rem;
-  line-height: 1.5;
-  color: var(--pb-text-light);
-}
-
-/* Formats for Joomla Pagination */
-.pb-pagination-wrapper {
-  margin-top: 6rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--pb-border-color);
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --pb-bg-color: #09090b;
-    --pb-text-color: #fafafa;
-    --pb-text-light: #a1a1aa;
-    --pb-accent-color: #ffffff;
-    --pb-border-color: #27272a;
-  }
-}
-
-/* Overall Logo Settings and Dark Header contrast */
 .brand-logo img {
-  max-width: 280px !important;
+  max-width: 250px !important;
   max-height: 48px !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  /* The Cassiopeia header is dark by default, invert the black logo to white */
-  filter: invert(1) brightness(1.2); 
 }
 
-@media (prefers-color-scheme: light) {
-  /* Only invert back to black if they explicitly change the header to white in the future */
-  .container-header[style*="background-color: rgb(255, 255, 255)"] .brand-logo img {
-      filter: none;
+/* Dark mode auto-inverts the black text logo */
+@media (prefers-color-scheme: dark) {
+  .brand-logo img {
+    filter: invert(1) brightness(1.2); 
   }
 }
 
