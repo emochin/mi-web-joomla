@@ -2,13 +2,22 @@
    Private Blog Custom Styles (Radical Redesign - Indie Blog Style)
    ======================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
+  /* Cassiopeia Global Typography Overrides */
+  --cassiopeia-font-family-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cassiopeia-font-family-headings: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cassiopeia-font-weight-normal: 400;
+  --cassiopeia-font-weight-headings: 800;
+
+  /* Custom Private Blog Variables */
   --pb-bg-color: #ffffff;
   --pb-text-color: #111111;
   --pb-text-light: #71717A;
   --pb-accent-color: #000000;
   --pb-border-color: #E4E4E7;
-  --pb-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --pb-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --pb-font-serif: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", serif;
 }
 
