@@ -1,0 +1,18 @@
+# Archivos de caché
+/cache/*
+/administrator/cache/*
+
+# Archivos temporales y de logs
+/tmp/*
+/logs/*
+
+# Archivo de configuración (contiene contraseñas sensibles)
+configuration.php
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Si vas a usar imágenes y quieres que no se suban al repo, descomenta las siguientes líneas:
+# /images/*
+# !/images/index.html
