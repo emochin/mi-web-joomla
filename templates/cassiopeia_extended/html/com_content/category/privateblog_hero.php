@@ -43,30 +43,32 @@ if (isset($images->image_intro) && !empty($images->image_intro)) {
 }
 ?>
 
-<article class="pb-grid-item">
+<div class="pb-hero-article">
     <?php if ($imageUrl) : ?>
-    <div class="pb-grid-image-wrapper">
+    <div class="pb-hero-image-wrapper">
         <a href="<?php echo $link; ?>">
-            <img src="<?php echo $imageUrl; ?>" alt="<?php echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8'); ?>" class="pb-grid-img">
+            <img src="<?php echo $imageUrl; ?>" alt="<?php echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8'); ?>" class="pb-hero-img">
         </a>
     </div>
     <?php endif; ?>
 
-    <div class="pb-grid-content">
+    <div class="pb-hero-content">
         <div class="pb-meta-minimal">
             <span><?php echo strtoupper($date); ?></span>
             <span class="pb-meta-dot">&middot;</span>
             <span><?php echo $readingTime; ?></span>
         </div>
 
-        <h3 class="pb-grid-title">
+        <h2 class="pb-hero-title">
             <a href="<?php echo $link; ?>">
                 <?php echo $this->escape($item->title); ?>
             </a>
-        </h3>
+        </h2>
 
-        <div class="pb-grid-excerpt">
-            <?php echo HTMLHelper::_('string.truncate', strip_tags($item->introtext), 150, true, false); ?>
+        <div class="pb-hero-excerpt">
+            <?php echo HTMLHelper::_('string.truncate', strip_tags($item->introtext), 250, true, false); ?>
         </div>
+
+        <a href="<?php echo $link; ?>" class="pb-read-link">LEER HISTORIA <span aria-hidden="true">&rarr;</span></a>
     </div>
-</article>
+</div>

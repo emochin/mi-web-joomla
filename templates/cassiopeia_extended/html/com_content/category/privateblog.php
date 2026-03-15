@@ -12,8 +12,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Layout\LayoutHelper;
 
 $app = Factory::getApplication();
 
@@ -22,121 +20,77 @@ $this->category->text = $this->category->description;
 $app->triggerEvent('onContentPrepare', [$this->category->extension . '.categories', &$this->category, &$this->params, 0]);
 $this->category->description = $this->category->text;
 
-$results = $app->triggerEvent('onContentAfterTitle', [$this->category->extension . '.categories', &$this->category, &$this->params, 0]);
-$afterDisplayTitle = trim(implode("\n", $results));
-
-$results = $app->triggerEvent('onContentBeforeDisplay', [$this->category->extension . '.categories', &$this->category, &$this->params, 0]);
-$beforeDisplayContent = trim(implode("\n", $results));
-
-$results = $app->triggerEvent('onContentAfterDisplay', [$this->category->extension . '.categories', &$this->category, &$this->params, 0]);
-$afterDisplayContent = trim(implode("\n", $results));
-
-$htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
+// We will skip displaying Joomla's default event outputs for a cleaner look
+$htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 
 ?>
-<div class="private-blog-container">
-    <div class="com-content-category-blog private-blog">
-        <?php if ($this->params->get('show_page_heading')) : ?>
-            <div class="page-header private-blog-header">
-                <h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
-            </div>
-        <?php endif; ?>
 
-        <?php if ($this->params->get('show_category_title', 1)) : ?>
-        <<?php echo $htag; ?> class="private-blog-title">
-            <?php echo $this->category->title; ?>
-        </<?php echo $htag; ?>>
-        <?php endif; ?>
-        <?php echo $afterDisplayTitle; ?>
+<div class="pb-canvas">
+    <div class="pb-wrapper">
+        
+        <header class="pb-site-header">
+            <?php if ($this->params->get('show_page_heading')) : ?>
+                <h1 class="pb-main-title"> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
+            <?php elseif ($this->params->get('show_category_title', 1)) : ?>
+                <h1 class="pb-main-title"> <?php echo $this->category->title; ?> </h1>
+            <?php endif; ?>
 
-        <?php if ($this->params->get('show_cat_tags', 1) && !empty($this->category->tags->itemTags)) : ?>
-            <div class="private-blog-tags">
-                <?php $this->category->tagLayout = new FileLayout('joomla.content.tags'); ?>
-                <?php echo $this->category->tagLayout->render($this->category->tags->itemTags); ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($beforeDisplayContent || $afterDisplayContent || $this->params->get('show_description', 1) || $this->params->def('show_description_image', 1)) : ?>
-            <div class="category-desc private-blog-desc clearfix">
-                <?php if ($this->params->get('show_description_image') && $this->category->getParams()->get('image')) : ?>
-                    <?php echo LayoutHelper::render(
-                        'joomla.html.image',
-                        [
-                            'src' => $this->category->getParams()->get('image'),
-                            'alt' => empty($this->category->getParams()->get('image_alt')) && empty($this->category->getParams()->get('image_alt_empty')) ? false : $this->category->getParams()->get('image_alt'),
-                        ]
-                    ); ?>
-                <?php endif; ?>
-                <?php echo $beforeDisplayContent; ?>
-                <?php if ($this->params->get('show_description') && $this->category->description) : ?>
+            <?php if ($this->params->get('show_description') && $this->category->description) : ?>
+                <div class="pb-main-desc">
                     <?php echo HTMLHelper::_('content.prepare', $this->category->description, '', 'com_content.category'); ?>
-                <?php endif; ?>
-                <?php echo $afterDisplayContent; ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
-            <?php if ($this->params->get('show_no_articles', 1)) : ?>
-                <div class="private-blog-empty">
-                    <span class="icon-info-circle" aria-hidden="true"></span> Aún no hay publicaciones en el blog privado.
                 </div>
             <?php endif; ?>
+        </header>
+
+        <?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
+            <div class="pb-empty-state">
+                Aún no hay historias publicadas aquí.
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($this->lead_items)) : ?>
-            <div class="private-blog-items items-leading <?php echo $this->params->get('blog_class_leading'); ?>">
-                <?php foreach ($this->lead_items as &$item) : ?>
-                    <div class="private-blog-item-wrapper">
+            <section class="pb-hero-section">
+                <?php 
+                // Display the VERY FIRST lead item as the Hero
+                $this->item = &$this->lead_items[0];
+                echo $this->loadTemplate('hero'); 
+                ?>
+            </section>
+        <?php endif; ?>
+
+        <?php 
+        // Collect remaining items (rest of leads + intros)
+        $remainingItems = [];
+        if (!empty($this->lead_items) && count($this->lead_items) > 1) {
+            for ($i = 1; $i < count($this->lead_items); $i++) {
+                $remainingItems[] = $this->lead_items[$i];
+            }
+        }
+        if (!empty($this->intro_items)) {
+            foreach ($this->intro_items as $item) {
+                $remainingItems[] = $item;
+            }
+        }
+        ?>
+
+        <?php if (!empty($remainingItems)) : ?>
+            <section class="pb-grid-section">
+                <div class="pb-grid-container">
+                    <?php foreach ($remainingItems as &$item) : ?>
                         <?php
                         $this->item = &$item;
                         echo $this->loadTemplate('item');
                         ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if (!empty($this->intro_items)) : ?>
-            <div class="private-blog-items items-intro">
-            <?php foreach ($this->intro_items as $key => &$item) : ?>
-                <div class="private-blog-item-wrapper">
-                        <?php
-                        $this->item = & $item;
-                        echo $this->loadTemplate('item');
-                        ?>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
-            </div>
+            </section>
         <?php endif; ?>
 
-        <?php if (!empty($this->link_items)) : ?>
-            <div class="items-more private-blog-links">
-                <?php echo $this->loadTemplate('links'); ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($this->maxLevel != 0 && !empty($this->children[$this->category->id])) : ?>
-            <div class="com-content-category-blog__children cat-children private-blog-children">
-                <?php if ($this->params->get('show_category_heading_title_text', 1) == 1) : ?>
-                    <h3> <?php echo Text::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>
-                <?php endif; ?>
-                <?php echo $this->loadTemplate('children'); ?> </div>
-        <?php endif; ?>
-        <?php // Code to add a link to submit an article. ?>
-        <?php if ($this->category->getParams()->get('access-create')) : ?>
-            <?php echo HTMLHelper::_('contenticon.create', $this->category, $this->category->params); ?>
-        <?php endif; ?>
         <?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-            <div class="com-content-category-blog__navigation w-100 private-blog-navigation">
-                <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-                    <p class="com-content-category-blog__counter counter pt-3 pe-2">
-                        <?php echo $this->pagination->getPagesCounter(); ?>
-                    </p>
-                <?php endif; ?>
-                <div class="com-content-category-blog__pagination pagination">
-                    <?php echo $this->pagination->getPagesLinks(); ?>
-                </div>
+            <div class="pb-pagination-wrapper">
+                <?php echo $this->pagination->getPagesLinks(); ?>
             </div>
         <?php endif; ?>
+
     </div>
 </div>
