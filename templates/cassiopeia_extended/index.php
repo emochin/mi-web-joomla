@@ -45,3 +45,6 @@ $wa->registerAndUseStyle('colors_custom', 'global/colors.css')
 // Force load user.css from the child template
 $wa->registerAndUseStyle('template.user.extended', 'user.css', [], ['weight' => 500]);
 
+// OVERRIDE: Force custom text logo directly in PHP to bypass any CSS caching issues
+$logo = '<span title="Emilio Moreno" style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.05em; color: var(--pb-text-color, inherit);">emiliomoreno.com</span>';
+
