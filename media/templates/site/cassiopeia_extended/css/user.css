@@ -161,6 +161,44 @@ body.site {
 }
 
 /* ========================================================================
+   System Alerts & Messages (Premium Indie Style)
+   ======================================================================== */
+
+.site joomla-alert,
+.site .alert,
+.site .alert-success,
+.site .alert-info,
+.site .alert-warning,
+.site .alert-danger {
+  background-color: var(--body-bg) !important;
+  color: var(--body-color) !important;
+  border: 1px solid var(--cassiopeia-border-color) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  font-family: var(--cassiopeia-font-family-body) !important;
+  padding: 1rem 1.5rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.site .alert-heading {
+  color: var(--body-color) !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.5rem;
+}
+
+.site joomla-alert button.btn-close,
+.site .alert .btn-close {
+  filter: grayscale(100%) opacity(0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  .site joomla-alert button.btn-close,
+  .site .alert .btn-close {
+    filter: invert(1) grayscale(100%) opacity(0.7);
+  }
+}
+
+/* ========================================================================
    Logo Settings & Layout Container Safeties
    ======================================================================== */
 
