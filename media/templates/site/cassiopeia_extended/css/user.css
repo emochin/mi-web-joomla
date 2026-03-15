@@ -236,3 +236,65 @@
       filter: none;
   }
 }
+
+/* ========================================================================
+   Top Horizontal Menu Styling
+   ======================================================================== */
+.container-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.container-nav .mod-menu,
+.container-nav .metismenu {
+  display: flex !important;
+  flex-direction: row;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container-nav .metismenu.mod-menu {
+    flex-direction: row;
+}
+
+.container-nav .mod-menu > li,
+.container-nav .metismenu > li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.container-nav .mod-menu a,
+.container-nav .metismenu a {
+  font-family: var(--pb-font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7) !important;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+  position: relative;
+  border-bottom: 2px solid transparent;
+}
+
+.container-nav .mod-menu a:hover,
+.container-nav .metismenu a:hover,
+.container-nav .mod-menu a[aria-current="page"],
+.container-nav .metismenu a[aria-current="page"] {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff;
+}
+
+/* Override Cassiopeia mobile menu toggler on desktop */
+@media (min-width: 992px) {
+  .container-nav .navbar-toggler {
+    display: none !important;
+  }
+}
