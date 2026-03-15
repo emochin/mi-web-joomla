@@ -41,3 +41,7 @@ $wa->registerAndUseStyle('colors_custom', 'global/colors.css')
         --h2size: ' . $this->params->get('h2size') . 'rem;
         --h3size: ' . $this->params->get('h3size') . 'rem;
     }');
+
+// Force load user.css from the child template
+$wa->registerAndUseStyle('template.user.extended', 'user.css', [], ['weight' => 500]);
+
