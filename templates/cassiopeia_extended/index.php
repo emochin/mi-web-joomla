@@ -114,16 +114,14 @@ $wa->usePreset('template.cassiopeia.' . ($this->direction === 'rtl' ? 'rtl' : 'l
 // Override 'template.active' asset to set correct ltr/rtl dependency
 $wa->registerStyle('template.active', '', [], [], ['template.cassiopeia.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr')]);
 
-// Restore logo behavior to use an image but fallback efficiently
+// Logo file or site title param
 if ($this->params->get('logoFile')) {
-    $logoUrl = Uri::root(false) . htmlspecialchars($this->params->get('logoFile'), ENT_QUOTES);
+    $logo = HTMLHelper::_('image', Uri::root(false) . htmlspecialchars($this->params->get('logoFile'), ENT_QUOTES), $sitename, ['loading' => 'eager', 'decoding' => 'async'], false, 0);
+} elseif ($this->params->get('siteTitle')) {
+    $logo = '<span title="' . $sitename . '">' . htmlspecialchars($this->params->get('siteTitle'), ENT_COMPAT, 'UTF-8') . '</span>';
 } else {
-    // If they haven't uploaded one in the template settings, look in the images folder
-    $logoUrl = Uri::root(false) . 'images/logo.png'; // Or logo.svg
+    $logo = HTMLHelper::_('image', 'logo.svg', $sitename, ['class' => 'logo d-inline-block', 'loading' => 'eager', 'decoding' => 'async'], true, 0);
 }
-
-// Render the image logo with a smart CSS class
-$logo = '<img src="' . $logoUrl . '" alt="Emilio Moreno" class="custom-image-logo" style="max-height: 40px; width: auto;">';
 
 $hasClass = '';
 
