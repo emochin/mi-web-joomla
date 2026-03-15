@@ -4,7 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-:root {
+body.site {
   /* ========================================================================
      Cassiopeia Global CSS Variable Overrides (Killing Defaults)
      ======================================================================== */
@@ -57,7 +57,7 @@
    Dark Mode Engine (Complete Cassiopeia Inversion)
    ======================================================================== */
 @media (prefers-color-scheme: dark) {
-  :root {
+  body.site {
     /* Global Colors & Backgrounds */
     --cassiopeia-color-primary: #ffffff;
     --cassiopeia-color-hover: #d4d4d8;
