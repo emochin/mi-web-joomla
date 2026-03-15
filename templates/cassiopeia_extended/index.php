@@ -114,8 +114,16 @@ $wa->usePreset('template.cassiopeia.' . ($this->direction === 'rtl' ? 'rtl' : 'l
 // Override 'template.active' asset to set correct ltr/rtl dependency
 $wa->registerStyle('template.active', '', [], [], ['template.cassiopeia.' . ($this->direction === 'rtl' ? 'rtl' : 'ltr')]);
 
-// Logo file or site title param
-$logo = '<span title="Emilio Moreno" style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.05em; color: var(--pb-text-color, inherit);">emiliomoreno.com</span>';
+// Restore logo behavior to use an image but fallback efficiently
+if ($this->params->get('logoFile')) {
+    $logoUrl = Uri::root(false) . htmlspecialchars($this->params->get('logoFile'), ENT_QUOTES);
+} else {
+    // If they haven't uploaded one in the template settings, look in the images folder
+    $logoUrl = Uri::root(false) . 'images/logo.png'; // Or logo.svg
+}
+
+// Render the image logo with a smart CSS class
+$logo = '<img src="' . $logoUrl . '" alt="Emilio Moreno" class="custom-image-logo" style="max-height: 40px; width: auto;">';
 
 $hasClass = '';
 
