@@ -217,4 +217,16 @@
     --pb-accent-color: #ffffff;
     --pb-border-color: #27272a;
   }
+  .custom-image-logo {
+    filter: invert(1); /* Makes the black text white on dark mode */
+  }
+}
+
+/* Image Logo constraints */
+.custom-image-logo {
+  max-width: 250px;
+  max-height: 48px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
